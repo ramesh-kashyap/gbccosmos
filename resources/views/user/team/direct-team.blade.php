@@ -43,11 +43,11 @@
 
     <!-- Form Control 1: Select Dropdown -->
     <div class="uk-form-controls"> 
-        <select name="type" class="uk-input form-control" onchange="window.location.href = this.value;">
-            <option value="">Select  History</option>
+        <select name="type" class="uk-input form-control" onchange="window.location.href = this.value;" id="historySelect">
             <option value="{{ route('user.level-team') }}">Level Team</option>
             <option value="{{ route('user.referral-team') }}">Direct Team</option>
         </select>
+    
     </div>
 
     <!-- Form Control 2: Limit Dropdown -->
@@ -169,3 +169,18 @@ $cnt = $direct_team->perPage() * ($direct_team->currentPage() - 1); ?>
 
 <!-- Custom inline CSS for responsive design -->
 
+<script>
+    // Function to select the option based on current URL
+    window.onload = function() {
+        var selectElement = document.getElementById('historySelect');
+        var currentUrl = window.location.href;
+
+        // Loop through each option and check if the value matches the current URL
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === currentUrl) {
+                selectElement.selectedIndex = i; // Set the matching option as selected
+                break;
+            }
+        }
+    };
+</script>
