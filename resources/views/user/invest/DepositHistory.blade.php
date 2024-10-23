@@ -42,15 +42,13 @@
             <option value="{{ route('user.DepositHistory') }}">Deposit History</option>
             <option value="{{ route('user.Withdraw-History') }}">Withdraw History</option>
             <option value="{{ route('user.fundHistory') }}">Fund History</option>
+
             <option value="{{ route('user.direct-income') }}">Direct Income</option>
             <option value="{{ route('user.level-income') }}">Level Income</option>
             <option value="{{ route('user.royalty-bonus') }}">Royalty Income</option>
             <option value="{{ route('user.leadership-bonus') }}">Leadership Income</option>
             <option value="{{ route('user.reward-bonus') }}">Reward Income</option>
             <option value="{{ route('user.pool-bonus') }}">Pool Income</option>
-            <option value="{{ route('user.package-auto-income') }}">Package Auto Upgrade Income</option>
-            <option value="{{ route('user.re-birth-income') }}">Re Birth Income</option>
-            <option value="{{ route('user.auto-upgrade-bonus') }}">Auto Upgrade Income</option>
 
 
 

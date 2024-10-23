@@ -77,7 +77,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\User','sponsor','id')->where('active_status','Active');
     } 
-
+    public function pool_bonus()
+    {
+        return $this->hasMany('App\Models\Income','user_id','id')->where('remarks','Pool Income');
+    } 
 
     
     public function leadership_bonus()

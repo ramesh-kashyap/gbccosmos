@@ -52,9 +52,6 @@
             <option value="{{ route('user.leadership-bonus') }}">Leadership Income</option>
             <option value="{{ route('user.reward-bonus') }}">Reward Income</option>
             <option value="{{ route('user.pool-bonus') }}">Pool Income</option>
-            <option value="{{ route('user.package-auto-income') }}">Package Auto Upgrade Income</option>
-            <option value="{{ route('user.re-birth-income') }}">Re Birth Income</option>
-            <option value="{{ route('user.auto-upgrade-bonus') }}">Auto Upgrade Income</option>
 
 
 

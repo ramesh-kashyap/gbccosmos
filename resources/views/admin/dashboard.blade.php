@@ -163,21 +163,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-xl-3 col-sm-3">
-								<div class="card">
-									<div class="card-body d-flex align-items-center justify-content-between">
-										<div class="menu">
-											<span class="font-w500 fs-16 d-block mb-2">Roi Income</span>
-											<h2>{{currency()}}  {{  number_format((\App\Models\Income::where('remarks','Roi Bonus')->sum('comm')),2)   }}  </h2>
-										</div>	
-										<div class="d-inline-block position-relative donut-chart-sale">
-											
-                                                <img src="{{asset('admin/images/pool_comission.png')}}" style="    width: 61px;" alt="">
-									
-										</div>
-									</div>
-								</div>
-							</div>
+						
 							<div class="col-xl-3 col-sm-3">
 								<div class="card">
 									<div class="card-body d-flex align-items-center justify-content-between">
@@ -223,21 +209,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-xl-3 col-sm-3">
-								<div class="card">
-									<div class="card-body d-flex align-items-center justify-content-between">
-										<div class="menu">
-											<span class="font-w500 fs-16 d-block mb-2">Re-Birth Income</span>
-											<h2>{{currency()}} {{  number_format((\App\Models\Income::where('remarks','Rebirth Income')->sum('comm')),2)   }} </h2>
-										</div>	
-										<div class="d-inline-block position-relative donut-chart-sale">
-										
-										<img src="{{asset('admin/images/pool_comission.png')}}" style="    width: 61px;" alt="">
-									
-										</div>
-									</div>
-								</div>
-							</div>
+						
 							<div class="col-xl-3 col-sm-3">
 								<div class="card">
 									<div class="card-body d-flex align-items-center justify-content-between">
@@ -268,36 +240,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-xl-3 col-sm-3">
-								<div class="card">
-									<div class="card-body d-flex align-items-center justify-content-between">
-										<div class="menu">
-											<span class="font-w500 fs-16 d-block mb-2">Auto-Upgrade Income</span>
-											<h2>{{currency()}} {{  number_format((\App\Models\Income::where('remarks','AutoUpgrade Income')->sum('comm')),2)   }} </h2>
-										</div>	
-										<div class="d-inline-block position-relative donut-chart-sale">
-										
-										<img src="{{asset('admin/images/pool_comission.png')}}" style="    width: 61px;" alt="">
-									
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-xl-3 col-sm-3">
-								<div class="card">
-									<div class="card-body d-flex align-items-center justify-content-between">
-										<div class="menu">
-											<span class="font-w500 fs-16 d-block mb-2">Package Auto Upgrade Income</span>
-											<h2>{{currency()}} {{  number_format((\App\Models\Income::where('remarks','Package Income')->sum('comm')),2)   }} </h2>
-										</div>	
-										<div class="d-inline-block position-relative donut-chart-sale">
-										
-										<img src="{{asset('admin/images/pool_comission.png')}}" style="    width: 61px;" alt="">
-									
-										</div>
-									</div>
-								</div>
-							</div>
+							
 
 
 
