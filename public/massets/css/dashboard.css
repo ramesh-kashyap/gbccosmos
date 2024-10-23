@@ -855,7 +855,13 @@ small.uk-form-icon-flip {
         -webkit-clip-path: polygon(100% 0, 100% calc(100% - var(--clip-figure)), calc(100% - var(--clip-figure)) 100%, 0 100%, 0 0);
                 clip-path: polygon(100% 0, 100% calc(100% - var(--clip-figure)), calc(100% - var(--clip-figure)) 100%, 0 100%, 0 0);
     }
-  
+    #as-dashboard-img {
+        position: absolute;
+        top: -90px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+    }
     #as-dashboard-bottom_inputs {
         margin-top: -45px;
     }
@@ -943,7 +949,9 @@ small.uk-form-icon-flip {
     #as-dashboard-top_return {
         left: 350px;
     }
-  
+    #as-dashboard-img {
+        width: 500px;
+    }
     .uk-card-form .uk-icon-button {
         margin-inline: 15px;
     }
@@ -3234,7 +3242,16 @@ small.uk-form-icon-flip {
     }
 }
 
-
+@media (min-width: 1600px) and (max-width: 1799px) {
+    #as-dashboard-top_return {
+        left: 430px;
+    }
+    #as-dashboard-img {
+        width: 320px;
+        top: 72px;
+        left: calc(50% + 24px);
+    }
+}
 
 @media (min-width: 1200px) {
     #as-dashboard-top_return {
@@ -3499,4 +3516,3 @@ small.uk-form-icon-flip {
         padding-left: 0px;
     }
 }
-
