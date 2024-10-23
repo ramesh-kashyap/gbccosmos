@@ -3,8 +3,13 @@
         <header class="uk-heading uk-text-center uk-margin-small-bottom">
             <h1 class="uk-heading-line">Create a new Deposit</h1>
         </header>
-
-
+        <style>
+            .new-deposit-amount-row__amount-cell {
+            -ms-flex: 1;
+            flex: 1;
+            margin-top: 22px;
+        }
+        </style>
         <form method=post action="{{ route('user.fundActivation') }}" name="spendform"
             class="uk-form-stacked uk-child-width-1-2@l" uk-height-match="target: &gt; fieldset &gt; div &gt; .uk-card"
             uk-grid="uk-grid">
@@ -16,9 +21,6 @@
                         <div style="margin-left:70px;" class="uk-legend">
                             <span class="uk-text-background">Make Deposit</span>
                         </div>
-                      
-                    
-
                         <div class="new-deposit-amount-row uk-margin-medium-top">
 
 
@@ -40,6 +42,7 @@
                                 </div>
 
                             </div>
+                        
 
                             <div class="new-deposit-amount-row__amount-cell">
                                 <label class="uk-form-label" for="as-form-amount">
@@ -58,23 +61,24 @@
                                         border-radius: 6px; 
                                          font-size: 1rem; 
                                         cursor: pointer; 
-                                        width: 100%;
-                                        "
-                                        >
-                                        <option style="width: 40%;" value="100">100 USD</option>
-                                        <option style="width: 40%;" value="200">200 USD</option>
-                                        <option style="width: 40%;" value="400">400 USD</option>
-                                        <option style="width: 40%;" value="800">800 USD</option>
-                                        <option style="width: 40%;" value="1600">1600 USD</option>
-                                        <option style="width: 40%;" value="3200">3200 USD</option>
-                                        <option style="width: 40%;" value="6400">6400 USD</option>
-                                        <option style="width: 40%;" value="128000">128000 USD</option>
-                                        <option style="width: 40%;" value="256000">256000 USD</option>
-                                        <option style="width: 40%;" value="512000">512000 USD</option>
-                                        <option style="width: 40%;" value="1024000">1024000 USD</option>
-                                        <option style="width: 40%;" value="2048000">2048000 USD</option>
-                                        <option style="width: 40%;" value="4056000">4056000 USD</option>
-
+                                        width: 100%;" >
+                                        <option value="20">20 USD</option>
+                                        <option  value="50">50 USD</option>
+                                        <option  value="100">100 USD</option>
+                                        <option  value="200">200 USD</option>
+                                        <option  value="400">400 USD</option>
+                                        <option  value="800">800 USD</option>
+                                        <option  value="1600">1600 USD</option>
+                                        <option  value="3200">3200 USD</option>
+                                        <option  value="6400">6400 USD</option>
+                                        <option  value="12800">12800 USD</option>
+                                        <option  value="51200">51200 USD</option>
+                                        <option  value="102400">102400 USD</option>
+                                        <option  value="202800">202800 USD</option>
+                                        <option  value="405600">405600 USD</option>
+                                        <option  value="811200">811200 USD</option>
+                                        <option  value="1622400">1622400 USD</option>
+                                        <option  value="3242800">3242800 USD</option>
                                     </select>
                                 </div>
                             </div>
@@ -91,7 +95,7 @@
                                     </figure>
                                     <small class="uk-form-icon uk-form-icon-flip js-currs-slug">
                                     </small>
-                                    <input type="text" name=user_id required class="uk-input form-control" />
+                                    <input type="text" name="user_id"  placeholder="Member Id" required class="uk-input form-control" />
                                 </div>
 
                             </div>
@@ -108,7 +112,7 @@
                                     </figure>
                                     <small class="uk-form-icon uk-form-icon-flip js-currs-slug">
                                     </small>
-                                    <input type="password" name="transaction_password" required
+                                    <input type="password" placeholder="Transaction Password" name="transaction_password" required
                                         class="uk-input form-control" />
                                 </div>
 

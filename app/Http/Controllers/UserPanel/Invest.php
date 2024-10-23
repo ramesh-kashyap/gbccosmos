@@ -409,7 +409,89 @@ try{
             $last_package=($invest_check)?$invest_check->amount:0;
 
          $balance=0;
-          // $walletType = $request->walletType;
+        
+         if($last_package==0)
+         {
+             $package_be=20;      
+         }
+         elseif($last_package==20)
+         {
+              $package_be=50;            
+         }
+         elseif($last_package==50)
+         {
+              $package_be=100;            
+         }
+         elseif($last_package==100)
+         {
+              $package_be=200;            
+         }
+         elseif($last_package==200)
+         {
+              $package_be=400;            
+         }
+         elseif($last_package==400)
+         {
+              $package_be=800;            
+         }
+         elseif($last_package==800)
+         {
+              $package_be=1600;            
+         }
+         elseif($last_package==1600)
+         {
+              $package_be=3200;            
+         }
+         elseif($last_package==3200)
+         {
+              $package_be=6400;            
+         }
+         elseif($last_package==6400)
+         {
+              $package_be=12800;            
+         }
+         elseif($last_package==12800)
+         {
+              $package_be=51200;            
+         }
+         elseif($last_package==51200)
+         {
+              $package_be=102400;            
+         }
+         elseif($last_package==102400)
+         {
+              $package_be=202800;            
+         }
+         elseif($last_package==202800)
+         {
+              $package_be=405600;            
+         }
+         elseif($last_package==405600)
+         {
+              $package_be=811200;            
+         }
+         elseif($last_package==811200)
+         {
+              $package_be=1622400;            
+         }
+         elseif($last_package==1622400)
+         {
+              $package_be=3242800;            
+         }
+         else
+         {
+           $package_be=0;   
+         }
+         if ($package_be==0)
+         {
+           return Redirect::back()->withErrors(array('already activate user'));
+         }
+
+         if ($request->amount!=$package_be)
+         { 
+           return Redirect::back()->withErrors(array('Please choose package $ '.$package_be));
+         }
+         
       
           $balance=round(Auth::user()->FundBalance(),2);
        
