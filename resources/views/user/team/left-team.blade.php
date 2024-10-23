@@ -29,7 +29,6 @@
 
                     <label for="">type:</label>
                     <select name="type" class="selectricBl" onchange="location = this.value;">
-                        <option value="">--SELECT--</option>
                         <option <?php ($page=="roi-bonus")?'selected':'';?> value="{{route('user.referral-team')}}">Referral Team</option>
                        
                         <option <?php ($page=="level-income")?'selected':'';?> value="{{route('user.level-team')}}" >Total Team</option>

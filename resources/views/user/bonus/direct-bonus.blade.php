@@ -31,31 +31,22 @@
                     <h1 class="uk-heading-line">Direct Income</h1>
                 </header>
                 <form action="{{ route('user.direct-income') }}" method="GET" name="opts">
-@csrf
 <!-- Form Grid with Flexbox for better alignment -->
 <div class="uk-grid-medium uk-flex-middle uk-flex-start uk-grid" uk-grid="">
 
     <!-- Form Control 1: Select Dropdown -->
     <div class="uk-form-controls"> 
-        <select name="type" class="uk-input form-control" onchange="window.location.href = this.value;">
-            <option value="">Select History</option>
-            <option value="{{ route('user.DepositHistory') }}">Deposit History</option>
-            <option value="{{ route('user.Withdraw-History') }}">Withdraw History</option>
-            <option value="{{ route('user.fundHistory') }}">Fund History</option>
-
-            <option value="{{ route('user.direct-income') }}">Direct Income</option>
-            <option value="{{ route('user.level-income') }}">Level Income</option>
-            <option value="{{ route('user.royalty-bonus') }}">Royalty Income</option>
-            <option value="{{ route('user.leadership-bonus') }}">Leadership Income</option>
-            <option value="{{ route('user.reward-bonus') }}">Reward Income</option>
-            <option value="{{ route('user.pool-bonus') }}">Pool Income</option>
-
-
-
-
-
-
-        </select>
+    <select name="type" class="uk-input form-control" onchange="window.location.href = this.value;" id="historySelect">
+    <option value="{{ route('user.DepositHistory') }}">Deposit History</option>
+    <option value="{{ route('user.Withdraw-History') }}">Withdraw History</option>
+    <option value="{{ route('user.fundHistory') }}">Fund History</option>
+    <option value="{{ route('user.direct-income') }}">Direct Income</option>
+    <option value="{{ route('user.level-income') }}">Level Income</option>
+    <option value="{{ route('user.royalty-bonus') }}">Royalty Income</option>
+    <option value="{{ route('user.leadership-bonus') }}">Leadership Income</option>
+    <option value="{{ route('user.reward-bonus') }}">Reward Income</option>
+    <option value="{{ route('user.pool-bonus') }}">Pool Income</option>
+</select>
     </div>
 
     <!-- Form Control 2: Limit Dropdown -->
@@ -176,4 +167,18 @@
 </div>
 </main>
 
+<script>
+    // Function to select the option based on current URL
+    window.onload = function() {
+        var selectElement = document.getElementById('historySelect');
+        var currentUrl = window.location.href;
 
+        // Loop through each option and check if the value matches the current URL
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === currentUrl) {
+                selectElement.selectedIndex = i; // Set the matching option as selected
+                break;
+            }
+        }
+    };
+</script>
