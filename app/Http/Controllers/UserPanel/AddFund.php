@@ -80,107 +80,45 @@ public function fundHistory(Request $request)
 
 
 
-
-
-
-// public function SubmitBuyFund(Request $request)
-// {
-
-//   try{
-//         $validation =  Validator::make($request->all(), [
-//             'amount' => 'required|numeric|min:0',
-//         ]);
-
-//         if($validation->fails()) {
-//             Log::info($validation->getMessageBag()->first());
-
-//             return redirect()->route('user.AddFund')->withErrors($validation->getMessageBag()->first())->withInput();
-//         }
-
-//            $user=Auth::user();
-                   
-//            $transaction['order_id'] = uniqid(); // invoice number
-//             $transaction['amountTotal'] = (FLOAT) $request->amount;
-//             $transaction['note'] = 'Transaction note';
-//            $transaction['buyer_name'] = $user->username;
-//            $transaction['user_id'] = $user->id;
-//             $transaction['buyer_email'] = $user->email;
-//             $transaction['redirect_url'] = url('user/AddFund?res=success'); // When Transaction was comleted
-//             $transaction['cancel_url'] = url('user/AddFund'); // When user click cancel link
-
-//            /*
-//            *   @required true
-//            *   @example first item
-//            */
-//            $transaction['items'][] = [
-//              'itemDescription' => 'Cryptoversal',
-//              'itemPrice' => (FLOAT) $request->amount, // USD
-//              'itemQty' => (INT) 1,
-//              'itemSubtotalAmount' => (FLOAT) $request->amount // USD
-//            ];
-
-//            $transaction['payload'] = [
-//              'foo' => [
-//                  'bar' => 'baz'
-//              ]
-//            ];
-
-//                 $url_ = CoinPayment::generatelink($transaction);
-
-//             return Redirect::to($url_);
-
-//       }
-//        catch(\Exception $e){
-//         Log::info('error here');
-//         Log::info($e->getMessage());
-//         print_r($e->getMessage());
-//         die("hi");
-//         return  redirect()->route('user.AddFund')->withErrors('error', $e->getMessage())->withInput();
-//     }
-
-// }
-
-
-
-
-
 public function SubmitBuyFund(Request $request)
 {
-    try {
-        $validation = Validator::make($request->all(), [
-            'amount' => 'required|numeric',
-            'payment_type' => 'required',
-            'transaction_id' => 'required|string|max:255', // Validate transaction ID
+
+  try{
+        $validation =  Validator::make($request->all(), [
+            'amount' => 'required',
+            'txHash' => 'required|unique:investments,transaction_id',
         ]);
 
-        if ($validation->fails()) {
+        if($validation->fails()) {
             Log::info($validation->getMessageBag()->first());
+
             return redirect()->route('user.AddFund')->withErrors($validation->getMessageBag()->first())->withInput();
         }
+        $user=Auth::user();
 
-        $user = Auth::user();
-        $invoice = substr(str_shuffle("0123456789"), 0, 7);
+               $data = [
+                    'txn_no' =>$request->txHash,
+                    'user_id' => $user->id, 
+                    'user_id_fk' => $user->username,
+                    'token' => $request->amount,
+                    'amount' => $request->amount*generalDetail()->tokenPrice,
+                    'status'=>'Approved', 
+                    'type' =>'GBC',
+                    'bdate' => Date("Y-m-d"),
+                ];
+                // dd($data);
+               $payment =  BuyFund::create($data);
 
-        $data = [
-            'txn_no' => $request->transaction_id, // Correctly get transaction ID
-            'orderId' => $invoice,
-            'user_id' => $user->id,
-            'user_id_fk' => $user->username,
-            'amount' => $request->amount,
-            'status' => 'Pending',
-            'type' => $request->payment_type,
-            'bdate' => date("Y-m-d"),
-        ];
-
-        $payment = BuyFund::create($data);
-
-        $notify[] = ['success', 'Fund Request Submitted successfully'];
-        return redirect()->route('user.AddFund')->withNotify($notify);
-    } catch (\Exception $e) {
+            return true;
+      }
+       catch(\Exception $e){
         Log::info('error here');
         Log::info($e->getMessage());
-        return redirect()->route('user.AddFund')->withErrors('error', $e->getMessage())->withInput();
+        print_r($e->getMessage());
+        die("hi");
+        return  redirect()->route('user.AddFund')->withErrors('error', $e->getMessage())->withInput();
     }
+
 }
 
 public function saveDocument($document)
