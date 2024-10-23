@@ -305,10 +305,9 @@ table#example {
                             <li><a href="{{ route('admin.level-bonus') }}">Level Income</a></li>
                             <li><a href="{{route('admin.direct-bonus')}}">Direct  Income</a></li>
                             <li><a href="{{route('admin.royalty')}}">Royalty</a></li>
-                            <li><a href="{{ route('admin.auto-upgrade-bonus') }}">Auto Upgrade Income</a></li>
-                            <li><a href="{{route('admin.re-birth-bonus')}}">Re Birth Income</a></li>
+                            
                             <li><a href="{{route('admin.reward-bonus')}}">Reward Income</a></li>
-                            <li><a href="{{route('admin.package-auto-upgrade-bonus')}}">Package Auto Upgrade Income</a></li>
+                           
                             <li><a href="{{route('admin.leadership-bonus')}}">Leadership Income</a></li>
                             <li><a href="{{route('admin.pool-bonus')}}">Pool Income</a></li>
 
