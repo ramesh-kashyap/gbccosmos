@@ -1,23 +1,47 @@
 <style>
-    /* Custom Select Dropdown */
-.custom-select {
-    max-width: 150px;  /* Adjust as per design */
+ .flex-search-limit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
 }
 
-/* Custom Search Input */
-.custom-search {
-    max-width: 250px;  /* Adjust as per design */
-    width: 100%;       /* Responsive */
-    margin-left: 10px; /* Gap between select and input */
-}
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 400px) {
-    .custom-search {
-        max-width: 100%; /* Full width on small screens */
+/* On mobile, align limit and search input side by side */
+@media (max-width: 768px) {
+    .flex-search-limit {
+        justify-content: space-between;
     }
+
+    /* Adjust widths on mobile view */
     .custom-select {
-        max-width: 100%; /* Full width on small screens */
+        flex-basis: 40%; /* Limit dropdown should take 40% width */
+    }
+    
+    .custom-search {
+        flex-basis: 55%; /* Search input takes the remaining space */
+    }
+
+    .search-reset-btns {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* On larger screens, keep everything in line and spaced */
+@media (min-width: 768px) {
+    .custom-select {
+        width: auto;
+    }
+
+    .custom-search {
+        width: auto;
+    }
+
+    .search-reset-btns {
+        margin-left: 10px; /* Add margin to space buttons */
+        display: flex;
+        gap: 10px;
     }
 }
 
@@ -30,57 +54,66 @@
                 <header class="uk-heading uk-text-center">
                     <h1 class="uk-heading-line"> Royalty Income</h1>
                 </header>
-                <form action="{{ route('user.royalty-bonus') }}" method="GET" name="opts">
-<!-- Form Grid with Flexbox for better alignment -->
-<div class="uk-grid-medium uk-flex-middle uk-flex-start uk-grid" uk-grid="">
+          
 
-    <!-- Form Control 1: Select Dropdown -->
-    <div class="uk-form-controls"> 
-    <select name="type" class="uk-input form-control" onchange="window.location.href = this.value;" id="historySelect">
-    <option value="{{ route('user.DepositHistory') }}">Deposit History</option>
-    <option value="{{ route('user.Withdraw-History') }}">Withdraw History</option>
-    <option value="{{ route('user.fundHistory') }}">Fund History</option>
-    <option value="{{ route('user.direct-income') }}">Direct Income</option>
-    <option value="{{ route('user.level-income') }}">Level Income</option>
-    <option value="{{ route('user.royalty-bonus') }}">Royalty Income</option>
-    <option value="{{ route('user.leadership-bonus') }}">Leadership Income</option>
-    <option value="{{ route('user.reward-bonus') }}">Reward Income</option>
-    <option value="{{ route('user.pool-bonus') }}">Pool Income</option>
-</select>
+<form action="{{ route('user.royalty-bonus') }}" method="GET" name="opts">
+    <!-- Form Grid with Flexbox for better alignment -->
+    <div class="uk-grid-medium uk-flex-middle uk-grid" uk-grid="">
+
+        <!-- Form Control 1: History Select Dropdown -->
+        <div class="uk-width-1-3@l uk-width-1-1@s uk-form-controls">
+            <select name="type" class="uk-input form-control" onchange="window.location.href = this.value;" id="historySelect">
+                <option value="{{ route('user.DepositHistory') }}">Deposit History</option>
+                <option value="{{ route('user.Withdraw-History') }}">Withdraw History</option>
+                <option value="{{ route('user.fundHistory') }}">Fund History</option>
+                <option value="{{ route('user.direct-income') }}">Direct Income</option>
+                <option value="{{ route('user.level-income') }}">Level Income</option>
+                <option value="{{ route('user.royalty-bonus') }}">Royalty Income</option>
+                <option value="{{ route('user.leadership-bonus') }}">Leadership Income</option>
+                <option value="{{ route('user.reward-bonus') }}">Reward Income</option>
+                <option value="{{ route('user.pool-bonus') }}">Pool Income</option>
+            </select>
+        </div>
+
+        <!-- Form Control 2: Limit Dropdown, Search Input, and Buttons -->
+        <div class="uk-width-2-3@l uk-width-1-1@s uk-form-controls flex-search-limit">
+       
+            <!-- Search Input -->
+            <div class="search-wrapper">
+                <input type="text" 
+                    placeholder="Search Users"
+                    name="search" 
+                    class="uk-input uk-text-emphasis custom-search" 
+                    value="{{ @$search }}">
+            </div>
+
+            <!-- Limit Dropdown -->
+            <div >
+                <select name="limit" class="uk-input form-control custom-select">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+
+            <!-- Buttons for search and reset -->
+            <div class="uk-form-controls uk-width-auto uk-text-left search-reset-btns">
+                <input type="submit" 
+                    name="submit" 
+                    class="uk-button uk-button-primary" 
+                    value="Search" />
+
+                <a href="{{ route('user.royalty-bonus') }}" 
+                    name="reset" 
+                    class="uk-button uk-button-default" 
+                    value="Reset">Reset</a>
+            </div>
+        </div>
+
     </div>
-
-    <!-- Form Control 2: Limit Dropdown -->
-    <div class="uk-form-controls" style="margin-right: 10px;">
-        <select name="limit" class="uk-input form-control custom-select">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-    </div>
-
-    <!-- Search Input with custom width and spacing -->
-    <input type="text" 
-           placeholder="Search Users"
-           name="search" 
-           class="uk-input uk-text-emphasis custom-search" 
-           value="{{ @$search }}">
-
-    <!-- Buttons aligned with margin-left for larger screens -->
-    <div class="uk-form-controls uk-width-auto uk-text-left search-reset-btns">
-        <input type="submit" 
-               name="submit" 
-               class="uk-button uk-button-primary" 
-               value="Search" />
-
-        <a href="{{ route('user.royalty-bonus') }}" 
-           name="reset" 
-           class="uk-button uk-button-default" 
-           value="Reset">Reset</a>
-    </div>
-
-</div>
 </form>
+
                        
                         <div class="uk-overflow-auto uk-margin-bottom">
                                                             <div>

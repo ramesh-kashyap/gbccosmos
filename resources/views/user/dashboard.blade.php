@@ -309,7 +309,7 @@
                                         <div class="next-plan-widget__footer">
                                             <div class="plan-upgrade-title next-plan-widget__plan-upgrade-title">
                                                 <div class="plan-upgrade-title__inner">
-                                                    <a href="?a=withdraw" target="_blank"
+                                                    <a href="{{route('user.Withdraw')}}" 
                                                         class="uk-button uk-button-primary uk-button-rounded tg-join-card__link">
                                                         <span>Withdraw</span>
                                                         <img src="{{asset('')}}massets/img/another/small-arrow-right-dark.svg"
