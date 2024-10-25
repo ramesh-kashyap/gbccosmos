@@ -328,6 +328,8 @@ function add_level_income($id, $amt)
     $user_mid = $data->id;
 
     $levelPercentages = [
+        20 => [40, 10, 5, 4, 3, 2, 1, 1, 4, 10],
+        50 => [40, 10, 5, 4, 3, 2, 1, 1, 4, 10],
         100 => [40, 10, 5, 4, 3, 2, 1, 1, 4, 10],
         200 => [10, 40, 10, 5, 4, 3, 2, 1, 1, 4], 
         400 => [10, 5, 4, 3, 2, 1, 1, 4, 10, 40], 
@@ -343,7 +345,6 @@ function add_level_income($id, $amt)
         811200 => [ 10, 5, 4, 3, 2, 1, 1, 4, 10, 40], 
         1622400 => [  5, 4, 3, 2, 1, 1, 4, 10, 40, 10],
         3242800 => [4, 3, 2, 1, 1, 4, 10, 40, 10, 5], 
-
     ];
 
     if (!isset($levelPercentages[$amt])) {
@@ -358,31 +359,64 @@ function add_level_income($id, $amt)
         if (!empty($sponsor)) {
             $Sponsor_status = User::where('id', $sponsor)->orderBy('id', 'desc')->first();
             $sp_status = $Sponsor_status->active_status;
+            $Sposnor_cnt = User::where('sponsor',$sponsor)->where('active_status','Active')->count("id");
             $lastPackage = \DB::table('investments')->where('user_id', $Sponsor_status->id)
                 ->where('status', 'Active')->orderBy('id', 'DESC')->limit(1)->first();
-            $plan = ($lastPackage) ? $lastPackage->plan : 0;
+            $lastPackage = ($lastPackage) ? $lastPackage->amount : 0;
         } else {
             $Sponsor_status = [];
             $sp_status = "Pending";
+            $lastPackage =0;
+            $Sposnor_cnt=0;
         }
 
         $pp = 0; 
-        if ($sp_status == "Active") {
+
+        $canditionTrue = false;
+        if ($cnt>=1 && $cnt<=3 && $Sposnor_cnt>=1) {
+            $canditionTrue = true;
+        }
+        if ($cnt==4 && $Sposnor_cnt>=2) {
+            $canditionTrue = true;
+        }
+        if ($cnt>=5 && $cnt<=6  && $Sposnor_cnt>=4) {
+            $canditionTrue = true;
+        }
+        if ($cnt>=7 && $cnt<=8  && $Sposnor_cnt>=6) {
+            $canditionTrue = true;
+        }
+        if ($cnt>=9 && $cnt<=10  && $Sposnor_cnt>=8) {
+            $canditionTrue = true;
+        }
+
+        if ($sp_status == "Active" && $lastPackage>=$amt && $canditionTrue) {
+
             $percentage = $levelPercentages[$amt][$cnt - 1] ?? 0; 
             $pp = ($amt * $percentage) / 100;
         }
+        else
+        {
+            $percentage = $levelPercentages[$amt][$cnt - 1] ?? 0; 
+            $pp = ($amt * $percentage) / 100;
+            \DB::table('users')->where('id',$Sponsor_status->id)->update(['laps_incomes'=>$Sponsor_status->laps_incomes+$pp]);
+            $pp = 0;
+        }
+
 
         $user_mid = @$Sponsor_status->id;
         $spid = @$Sponsor_status->id;
 
         if ($spid > 0 && $cnt <= 10) {
             if ($pp > 0) {
-             
+                $net = $pp-$pp*20/100;
                 $data = [
                     'user_id' => $user_mid,
                     'user_id_fk' => $Sponsor_status->username,
                     'amt' => $amt,
-                    'comm' => $pp,
+                    'comm' =>$net ,
+                    'reentryDebit' => $pp*10/100,
+                    'upgradeDebit' => $pp*10/100,
+                    'bossCoin' => $net/generalDetail()->tokenPrice,
                     'remarks' => 'Level Bonus',
                     'level' => $cnt,
                     'rname' => $rname,
@@ -401,96 +435,17 @@ function add_level_income($id, $amt)
 
 
 
-// function add_direct_income_new($id,$amt,$newDate,$newDateTime)
-// {
-
-//   //$user_id =$this->session->userdata('user_id_session')
-// $data = User::where('id',$id)->orderBy('id','desc')->first();
-
-// $user_id = $data->username;
-// $fullname=$data->name;
-
-// $rname = $data->username;
-// $user_mid = $data->id;
-
-
-//       $cnt = 1;
-
-//         $amount = $amt/100;
-
-//               $Sposnor_id = User::where('id',$user_mid)->orderBy('id','desc')->first();
-//               $sponsor=$Sposnor_id->sponsor;
-//               if (!empty($sponsor))
-//                {
-//                 $Sposnor_status = User::where('id',$sponsor)->orderBy('id','desc')->first();
-//               $sp_status=$Sposnor_status->active_status;
-//               $Sposnor_cnt = User::where('sponsor',$sponsor)->where('active_status','Active')->count("id");
-//               }
-//               else
-//               {
-//                 $Sposnor_status =array();
-//                 $sp_status="Pending";
-//                 $Sposnor_cnt =0;
-//               }
-//              $percent = 5;
-
-//              if($sp_status=="Active")
-//                {
-
-//                 $pp = $amount*$percent;
-
-//               }else
-//               {
-//                 $pp=0;
-//               }
-
-//               $user_mid = @$Sposnor_status->id;
-//               //echo $user_id;
-//              //die;
-//               $idate = date("Y-m-d");
-
-//               $spid = @$Sposnor_status->id;
-
-
-//               $user_id_fk=$sponsor;
-//               //print_r($user_id_fk);die;
-//              // echo $cnt." ".$spid." ".$pp."<br>";
-//               if($spid>0 && $pp>0){
-//                  $data = [
-//                 'user_id' => $user_mid,
-//                 'user_id_fk' =>$Sposnor_status->username,
-//                 'amt' => $amt,
-//                 'comm' => $pp,
-//                 'remarks' => 'Direct Bonus',
-//                 'level' => $cnt,
-//                 'rname' => $rname,
-//                 'fullname' => $fullname,
-//                 'ttime' => $newDate,
-//                 'created_at' => $newDateTime,
-
-//             ];
-//             $user_data =  Income::Create($data);
-
-
-//        }
-
-
-// return true;
-// }
-
-
 function add_direct_income($id,$amt)
 {
 
   //$user_id =$this->session->userdata('user_id_session')
-$data = User::where('id',$id)->orderBy('id','desc')->first();
+    $data = User::where('id',$id)->orderBy('id','desc')->first();
 
-$user_id = $data->username;
-$fullname=$data->name;
+    $user_id = $data->username;
+    $fullname=$data->name;
 
-$rname = $data->username;
-$user_mid = $data->id;
-
+    $rname = $data->username;
+    $user_mid = $data->id;
 
       $cnt = 1;
 
@@ -503,28 +458,28 @@ $user_mid = $data->id;
                 $Sposnor_status = User::where('id',$sponsor)->orderBy('id','desc')->first();
                 $sp_status=$Sposnor_status->active_status;
                 $Sposnor_cnt = User::where('sponsor',$sponsor)->where('active_status','Active')->count("id");
-                $lastPackage = \DB::table('investments')->where('user_id',$Sposnor_status->id)->where('status','Active')->sum("amount");
-                $total_profit = \DB::table('incomes')->where('user_id',$Sposnor_status->id)->sum("comm");
-                $total_get = $lastPackage*200/100;
+                $lastPackage = \DB::table('investments')->where('user_id', $Sponsor_status->id)
+                ->where('status', 'Active')->orderBy('id', 'DESC')->limit(1)->first();
+                 $lastPackage = ($lastPackage) ? $lastPackage->amount : 0;
               }
               else
               {
                 $Sposnor_status =array();
                 $sp_status="Pending";
                 $Sposnor_cnt =0;
-                $total_profit =0;
-                $total_get =0;
+                $lastPackage =0;
               }
              $percent = 10;
 
-             if($sp_status=="Active")
+             if($sp_status=="Active" && $lastPackage>=$amt)
                {
-
                 $pp = $amount*$percent;
 
               }else
               {
-                $pp=0;
+                $pp = $amount*$percent;
+                \DB::table('users')->where('id',$Sponsor_status->id)->update(['laps_incomes'=>$Sponsor_status->laps_incomes+$pp]);
+                $pp = 0;
               }
 
               $user_mid = @$Sposnor_status->id;
@@ -534,33 +489,26 @@ $user_mid = $data->id;
 
               $spid = @$Sposnor_status->id;
         
-                 $max_income=$total_get;
-             $n_m_t = $max_income - $total_profit;
-             if($pp >= $n_m_t)
-             {
-                 $pp = $n_m_t;
-             }  
-             
-
               $user_id_fk=$sponsor;
               //print_r($user_id_fk);die;
              // echo $cnt." ".$spid." ".$pp."<br>";
               if($spid>0 && $pp>0){
+                $net = $pp-$pp*20/100;
                  $data = [
                 'user_id' => $user_mid,
                 'user_id_fk' =>$Sposnor_status->username,
                 'amt' => $amt,
-                'comm' => $pp,
+                'comm' => $net,
+                'reentryDebit' => $pp*10/100,
+                'upgradeDebit' => $pp*10/100,
+                'bossCoin' => $net/generalDetail()->tokenPrice,
                 'remarks' => 'Direct Income',
                 'level' => $cnt,
                 'rname' => $rname,
                 'fullname' => $fullname,
                 'ttime' => Date("Y-m-d"),
-
             ];
             $user_data =  Income::Create($data);
-
-
        }
 
 

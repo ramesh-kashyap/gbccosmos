@@ -12,7 +12,7 @@ class Income extends Model
 
  protected $fillable = 
  [
-    'user_id', 'user_id_fk', 'amt','comm','remarks','ttime','level','tleft','tright','rname','fullname','invest_id','updated_at','created_at','credit_type','award',
+    'user_id', 'user_id_fk', 'amt','comm','remarks','ttime','level','tleft','tright','rname','fullname','invest_id','updated_at','created_at','credit_type','award','reentryDebit','upgradeDebit','bossCoin'
  ];
 
 
